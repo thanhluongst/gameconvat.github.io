@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Củ Ngần's animals speak and select</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; background: #e0f7fa; }
+        canvas { display: block; margin: 0 auto; }
+        body, #header-bar, #game-container, canvas, .phaser-text {
+            font-family: 'Baloo 2', 'Fredoka', Arial, sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+    <script src="data/animalList.js"></script>
+    <script src="lang/vi.js"></script>
+    <script src="config/settings.js"></script>
+    <script src="utils/soundUtils.js"></script>
+    <script src="utils/textStyle.js"></script>
+    <script src="scene/logic/AnimalManager.js"></script>
+    <script src="scene/logic/SoundManager.js"></script>
+    <script src="scene/logic/CollisionManager.js"></script>
+    <script src="scene/ui/HeaderBar.js"></script>
+    <script src="scene/ui/BottomBar.js"></script>
+    <script src="scene/ui/AnimalSprites.js"></script>
+    <script src="scene/event/AnimalEvents.js"></script>
+    <script src="scene/event/GameEvents.js"></script>
+    <script src="scene/IntroScene.js"></script>
+    <script src="scene/StageScene.js"></script>
+    <script src="scene/MainScene.js"></script>
+    <script src="scene/EndScene.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
