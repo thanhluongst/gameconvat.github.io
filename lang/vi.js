@@ -20,5 +20,8 @@ window.LANG = {
   aboutHomeBtn: "🔙 Trang chủ",
   confirmHome: "Bạn có muốn quay về trang chủ?",
   confirmBack: "Bạn có muốn quay lại chọn màn?",
+  langVi: "🇻🇳 Tiếng Việt",
+  langEn: "🇺🇸 English",
+  aboutBtn: "ℹ️ Giới thiệu",
   // ...bổ sung các text khác nếu cần...
 };

@@ -14,8 +14,29 @@ class IntroScene extends Phaser.Scene {
     }
     create() {
         const w = this.sys.game.config.width, h = this.sys.game.config.height;
-        this.add.text(w/2, h/4, LANG.introTitle, { fontSize: getResponsiveFont(this, 12), color: '#333', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
-        this.add.text(w/2, h/4+50, LANG.introSubtitle, { fontSize: getResponsiveFont(this, 18), color: '#555', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
+
+        // Thêm menu chọn ngôn ngữ, căn phải/trái để không bị chồng lấp
+        const langBtnVi = this.add.text(w/2 - 20, 40, LANG.langVi, {
+            fontSize: getResponsiveFont(this, 18),
+            color: window.CURRENT_LANG === 'vi' ? '#1976d2' : '#555',
+            backgroundColor: window.CURRENT_LANG === 'vi' ? '#fffbe7' : '#e3e3e3',
+            padding: { left: 18, right: 18, top: 8, bottom: 8 },
+            fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif",
+            borderRadius: 12
+        }).setOrigin(1, 0.5).setInteractive();
+        const langBtnEn = this.add.text(w/2 + 20, 40, LANG.langEn, {
+            fontSize: getResponsiveFont(this, 18),
+            color: window.CURRENT_LANG === 'en' ? '#1976d2' : '#555',
+            backgroundColor: window.CURRENT_LANG === 'en' ? '#fffbe7' : '#e3e3e3',
+            padding: { left: 18, right: 18, top: 8, bottom: 8 },
+            fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif",
+            borderRadius: 12
+        }).setOrigin(0, 0.5).setInteractive();
+        langBtnVi.on('pointerdown', () => { window.setLang('vi'); this.scene.restart(); });
+        langBtnEn.on('pointerdown', () => { window.setLang('en'); this.scene.restart(); });
+
+        this.add.text(w/2, h/4, LANG.introTitle, { fontSize: getResponsiveFont(this, 14), color: '#333', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
+        this.add.text(w/2, h/4+50, LANG.introSubtitle, { fontSize: getResponsiveFont(this, 20), color: '#555', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
 
         // Tạo nút animal và fruit, sau đó căn text dựa vào chiều cao thực tế của ảnh
         const animalBtn = this.add.image(w/2 - 120, h/2, 'animal_icon').setInteractive().setScale(0.5);
@@ -49,7 +70,7 @@ class IntroScene extends Phaser.Scene {
         fruitBtn.on('pointerdown', () => this.scene.start('StageScene', { mode: 'fruit' }));
 
         // Thêm nút "Giới thiệu" ở dưới cùng màn hình
-        const aboutBtn = this.add.text(w/2, h - 60, 'ℹ️ Giới thiệu', {
+        const aboutBtn = this.add.text(w/2, h - 60, LANG.aboutBtn, {
             fontSize: getResponsiveFont(this, 20),
             color: '#1976d2',
             backgroundColor: '#fff',

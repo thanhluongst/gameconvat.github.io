@@ -21,7 +21,7 @@ function playSoundSequence(scene, soundKeys, onComplete) {
  * @param {number} [max=36] - Kích thước lớn nhất (px).
  * @returns {string} fontSize (px)
  */
-function getResponsiveFont(scene, ratio = 24, min = 12, max = 36) {
+function getResponsiveFont(scene, ratio = 24, min = 12, max = 48) {
     const w = scene.sys.game.config.width;
     const h = scene.sys.game.config.height;
     // Lấy min giữa width và height để tránh chữ quá to trên mobile hoặc màn hình dọc

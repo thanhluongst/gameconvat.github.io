@@ -16,6 +16,17 @@
 <body>
     <script src="data/animalList.js"></script>
     <script src="lang/vi.js"></script>
+    <script src="lang/en.js"></script>
+    <script>
+      window.LANG_VI = window.LANG; // Lưu lại object tiếng Việt
+      window.CURRENT_LANG = 'vi';
+      window.setLang = function(lang) {
+        window.CURRENT_LANG = lang;
+        window.LANG = (lang === 'en') ? window.LANG_EN : window.LANG_VI;
+      };
+      // Khởi tạo LANG mặc định
+      window.LANG = window.LANG_VI;
+    </script>
     <script src="config/settings.js"></script>
     <script src="utils/soundUtils.js"></script>
     <script src="utils/textStyle.js"></script>
