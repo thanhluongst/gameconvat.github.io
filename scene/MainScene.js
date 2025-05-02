@@ -144,6 +144,8 @@ MainScene.prototype.askAnimal = function () {
 
 MainScene.prototype.checkAnswer = function (key) {
     if (key !== this.currentAnswer) {
+        // Save wrong click for this animal
+        if (window.GameStorage) window.GameStorage.saveWrongClick(key);
         // Hiển thị backdrop và icon sai ở giữa màn hình, flash 1s
         var w = this.sys.game.config.width, h = this.sys.game.config.height;
         // màu backdrop: lần cuối (turnTries==0) thì đen, còn lại thì vàng nhạt
@@ -222,6 +224,7 @@ MainScene.prototype.checkAnswer = function (key) {
                 if (self.playingAnimals.length > 0) {
                     self.askAnimal();
                 } else {
+                    // Always save stars for this stage, even if lower than previous
                     var total = self.correctCount + self.incorrectCount;
                     var percent = total === 0 ? 100 : (self.correctCount / total) * 100;
                     var stars = 0;
@@ -230,6 +233,7 @@ MainScene.prototype.checkAnswer = function (key) {
                     else if (percent >= 50) stars = 3;
                     else if (percent >= 30) stars = 2;
                     else if (percent >= 10) stars = 1;
+                    window.GameStorage.saveStageStars(self.mode, self.stage, stars);
                     self.scene.start('EndScene', { stars: stars, mode: self.mode, stage: self.stage });
                 }
             }, 2000);

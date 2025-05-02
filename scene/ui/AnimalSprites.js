@@ -5,8 +5,10 @@ window.AnimalSprites = {
             scene.animalSprites.forEach(function(s) { s.destroy(); });
         }
         scene.animalSprites = [];
-        var headerBarHeight = 50;
-        var bottomBarHeight = 40;
+        // Use actual header and bottom bar heights
+        var headerBarHeight = scene.headerBar && scene.headerBar.bg ? scene.headerBar.bg.height : 50;
+        var bottomBarHeight = scene.bottomBar && scene.bottomBar.bg ? scene.bottomBar.bg.height : 40;
+        var overlapRatio = typeof ANIMAL_OVERLAP_RATIO !== 'undefined' ? ANIMAL_OVERLAP_RATIO : 0.1;
 
         // Random thứ tự các sprite trong array
         var shuffled = animals.slice();
@@ -40,6 +42,9 @@ window.AnimalSprites = {
             // Chính giữa từng ô trong grid
             var x = offsetX + col * (spriteSize + spacing) + spriteSize / 2;
             var y = offsetY + row * (spriteSize + spacing) + spriteSize / 2;
+            // Allow overlapRatio overlap with header bar
+            var minY = headerBarHeight - (spriteSize * overlapRatio) + (spriteSize / 2);
+            if (y < minY) y = minY;
 
             var s = scene.add.image(x, y, animal.key).setInteractive();
             var maxDim = Math.max(s.width, s.height);
@@ -59,15 +64,21 @@ window.AnimalSprites = {
     updateSprites: function(scene) {
         if (!scene.animalSprites) return;
         var now = scene.time.now / 1000; // giây
+        var headerBarHeight = scene.headerBar && scene.headerBar.bg ? scene.headerBar.bg.height : 50;
+        var bottomBarHeight = scene.bottomBar && scene.bottomBar.bg ? scene.bottomBar.bg.height : 40;
+        var overlapRatio = typeof ANIMAL_OVERLAP_RATIO !== 'undefined' ? ANIMAL_OVERLAP_RATIO : 0.1;
         scene.animalSprites.forEach(function(s) {
             if (s.getData('animalKey') === scene.collisionDisabledSpriteKey) return;
             var x = s.x + s.getData('vx') * scene.game.loop.delta / 1000;
             var y = s.y + s.getData('vy') * scene.game.loop.delta / 1000;
             var halfW = s.displayWidth / 2, halfH = s.displayHeight / 2;
+            // Allow overlapRatio overlap with header and bottom bar
+            var allowedHeaderOverlap = halfH * overlapRatio;
+            var allowedFooterOverlap = halfH * overlapRatio;
             if (x - halfW < 0 || x + halfW > scene.sys.game.config.width) s.setData('vx', -s.getData('vx'));
-            if (y - halfH < 0 || y + halfH > scene.sys.game.config.height) s.setData('vy', -s.getData('vy'));
+            if (y - halfH < headerBarHeight - allowedHeaderOverlap || y + halfH > scene.sys.game.config.height - bottomBarHeight + allowedFooterOverlap) s.setData('vy', -s.getData('vy'));
             s.x = Phaser.Math.Clamp(x, halfW, scene.sys.game.config.width - halfW);
-            s.y = Phaser.Math.Clamp(y, halfH, scene.sys.game.config.height - halfH);
+            s.y = Phaser.Math.Clamp(y, headerBarHeight - allowedHeaderOverlap + halfH, scene.sys.game.config.height - bottomBarHeight + allowedFooterOverlap - halfH);
             // Hiệu ứng lắc qua lắc lại
             var shakePhase = s.getData('shakePhase');
             var shakeSpeed = s.getData('shakeSpeed');

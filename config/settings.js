@@ -12,3 +12,6 @@ const REPEAT_SOUND_DELAY = 4300;
 
 // Độ lắc tối đa cho animal sprite (đơn vị: độ)
 const ANIMAL_SHAKE_DEGREE = 8;
+
+// Allowable overlap ratio for sprites and bars (e.g. 0.1 = 10%)
+const ANIMAL_OVERLAP_RATIO = 0.02;

@@ -93,6 +93,24 @@ class StageScene extends Phaser.Scene {
                     fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
                 }
             ).setOrigin(0.5);
+            // Hiển thị số sao đã đạt được ở dưới cùng card
+            let savedStars = 0;
+            if (window.GameStorage && typeof window.GameStorage.loadStageStars === 'function') {
+                savedStars = window.GameStorage.loadStageStars(this.mode, i);
+            }
+            const starsToShow = (typeof savedStars === 'number' && savedStars >= 1 && savedStars <= 5) ? savedStars : 0;
+            if (starsToShow > 0) {
+                this.add.text(
+                    x,
+                    y + cardHeight/2 - 8, // sát đáy card
+                    '★'.repeat(starsToShow) + '☆'.repeat(5 - starsToShow),
+                    {
+                        fontSize: '18px',
+                        color: '#fbc02d',
+                        fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+                    }
+                ).setOrigin(0.5);
+            }
             // Tạo vùng tương tác
             const hitZone = this.add.zone(x, y, cardWidth, cardHeight).setRectangleDropZone(cardWidth, cardHeight).setInteractive();
 
@@ -122,6 +140,20 @@ class StageScene extends Phaser.Scene {
                 this.scene.start('MainScene', { mode: this.mode, stage: i });
             });
         }
+        // Thêm nút Top Wrong (Sai nhiều nhất) ở cạnh dưới màn hình, trên aboutHomeBtn
+        const topWrongBtn = this.add.text(
+            w / 2,
+            h - 60,
+            window.LANG && window.LANG.topWrongBtn ? window.LANG.topWrongBtn : '🔝 Top Sai Nhiều',
+            {
+                fontSize: getResponsiveFont(this, 20),
+                color: '#d32f2f',
+                backgroundColor: '#fff',
+                fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+            }
+        ).setOrigin(0.5).setInteractive();
+        topWrongBtn.on('pointerdown', () => this.scene.start('TopWrongClicksScene'));
+
         // Thêm nút "aboutHomeBtn" ở cạnh dưới màn hình
         const aboutHomeBtn = this.add.text(
             w / 2,
