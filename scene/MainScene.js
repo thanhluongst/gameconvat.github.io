@@ -20,26 +20,7 @@ MainScene.prototype.init = function (data) {
 };
 
 MainScene.prototype.preload = function () {
-
-    // Hiển thị loading gif khi đang load
-    this.loadingHelper = window.showLoadingText(this);
-
-    animalList.forEach(function (a) {
-        this.load.image(a.key, a.img);
-        this.load.audio(a.key + '_vi', a.soundVi);
-        this.load.audio(a.key + '_en', a.soundEn);
-    }, this);
-    this.load.audio('bravo', 'assets/gamesound/bravo.mp3');
-    this.load.audio('wrong', 'assets/gamesound/wrong.mp3');
-    // Preload wrong icon image
-    this.load.image('wrong_icon', 'assets/gameicons/wrong.png');
-    
-    this.load.image('pause_icon', 'assets/gameicons/pause.png');
-    this.load.image('resume_icon', 'assets/gameicons/resume.png');
-    this.load.image('reload_icon', 'assets/gameicons/reload.png');
-    this.load.image('home_icon', 'assets/gameicons/home.png');
-    this.load.image('back_icon', 'assets/gameicons/back.png');
-    this.load.image('loading_gif', 'assets/gameicons/loading.gif');
+    preloadMainSceneAssets(this);
 };
 
 MainScene.prototype.create = function () {

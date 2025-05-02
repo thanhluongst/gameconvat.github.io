@@ -56,5 +56,52 @@ class IntroScene extends Phaser.Scene {
             fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
         }).setOrigin(0.5).setInteractive();
         aboutBtn.on('pointerdown', () => this.scene.start('AboutScene'));
+
+        // Sau khi UI đã hiển thị, preload asset MainScene chạy nền (không ảnh hưởng UI)
+        preloadMainSceneAssets(this);
+        this.load.start();
     }
+}
+
+/**
+ * Preload các asset cần cho MainScene (chạy nền).
+ * @param {Phaser.Scene} scene
+ */
+function preloadMainSceneAssets(scene) {
+    animalList.forEach(function (a) {
+        if (!scene.textures.exists(a.key)) {
+            scene.load.image(a.key, a.img);
+        }
+        if (!scene.cache.audio.exists(a.key + '_vi')) {
+            scene.load.audio(a.key + '_vi', a.soundVi);
+        }
+        if (!scene.cache.audio.exists(a.key + '_en')) {
+            scene.load.audio(a.key + '_en', a.soundEn);
+        }
+    });
+    if (!scene.cache.audio.exists('bravo')) {
+        scene.load.audio('bravo', 'assets/gamesound/bravo.mp3');
+    }
+    if (!scene.cache.audio.exists('wrong')) {
+        scene.load.audio('wrong', 'assets/gamesound/wrong.mp3');
+    }
+    if (!scene.textures.exists('wrong_icon')) {
+        scene.load.image('wrong_icon', 'assets/gameicons/wrong.png');
+    }
+    if (!scene.textures.exists('pause_icon')) {
+        scene.load.image('pause_icon', 'assets/gameicons/pause.png');
+    }
+    if (!scene.textures.exists('resume_icon')) {
+        scene.load.image('resume_icon', 'assets/gameicons/resume.png');
+    }
+    if (!scene.textures.exists('reload_icon')) {
+        scene.load.image('reload_icon', 'assets/gameicons/reload.png');
+    }
+    if (!scene.textures.exists('home_icon')) {
+        scene.load.image('home_icon', 'assets/gameicons/home.png');
+    }
+    if (!scene.textures.exists('back_icon')) {
+        scene.load.image('back_icon', 'assets/gameicons/back.png');
+    }
+    // Nếu bạn cần preload thêm các asset khác cho MainScene, thêm ở đây
 }

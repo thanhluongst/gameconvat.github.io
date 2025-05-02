@@ -26,6 +26,6 @@ window.getGameTextStyle = function(options, scene) {
         align: options.align || 'left',
         padding: options.padding || { left: 0, right: 0, top: 0, bottom: 0 }
     }
-    console.log('getGameTextStyle', revalue);
+    // console.log('getGameTextStyle', revalue);
     return revalue;
 };

@@ -122,5 +122,18 @@ class StageScene extends Phaser.Scene {
                 this.scene.start('MainScene', { mode: this.mode, stage: i });
             });
         }
+        // Thêm nút "aboutHomeBtn" ở cạnh dưới màn hình
+        const aboutHomeBtn = this.add.text(
+            w / 2,
+            h - 20,
+            window.LANG.aboutHomeBtn,
+            {
+                fontSize: getResponsiveFont(this, 20),
+                color: '#1976d2',
+                backgroundColor: '#fff',
+                fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+            }
+        ).setOrigin(0.5).setInteractive();
+        aboutHomeBtn.on('pointerdown', () => this.scene.start('IntroScene'));
     }
 }

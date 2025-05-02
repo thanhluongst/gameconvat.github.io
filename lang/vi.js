@@ -18,5 +18,7 @@ window.LANG = {
   about: "Giới thiệu",
   aboutAuthor: "Tác giả: Bs. Trần Quốc Hoài.\nGame giành cho con gái Củ Ngần.\nMọi ý kiến đóng góp xin gửi về email: bsquochoainew@gmail.com\nCảm ơn bạn đã chơi game này!\nHỗ trợ tác giả: TRẦN QUỐC HOÀI\nSố tài khoản: 0394446896\nNgân hàng: MB BANK - Ngân hàng quân đội\nChi nhánh: Ho Chi Minh",
   aboutHomeBtn: "🔙 Trang chủ",
+  confirmHome: "Bạn có muốn quay về trang chủ?",
+  confirmBack: "Bạn có muốn quay lại chọn màn?",
   // ...bổ sung các text khác nếu cần...
 };
