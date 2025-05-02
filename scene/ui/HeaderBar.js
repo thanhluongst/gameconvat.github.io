@@ -7,30 +7,32 @@ window.createHeaderBar = function(scene) {
     var headerHeight = 50;
     headerBar.bg = scene.add.rectangle(0, 0, scene.sys.game.config.width, headerHeight, 0x1976d2, 0.95).setOrigin(0, 0).setDepth(100);
 
-    // Thêm các icon bên trái tận cùng (sát lề trái)
+    // Tính toán vị trí các icon sát lề phải
     const iconY = headerHeight / 2;
     const iconSize = 32;
-    let iconX = 0; // bắt đầu sát lề trái
+    const iconMargin = 2;
+    const totalIcons = 4;
+    const totalIconsWidth = totalIcons * iconSize + (totalIcons - 1) * iconMargin;
+    let iconX = scene.sys.game.config.width - totalIconsWidth; // bắt đầu sát lề phải
 
     // Pause/Resume icon
     headerBar.pauseIcon = scene.add.image(iconX + iconSize / 2, iconY, 'pause_icon').setOrigin(0.5).setDisplaySize(iconSize, iconSize).setDepth(102).setInteractive();
     headerBar.pauseIcon.isPaused = false;
-    iconX += iconSize;
+    iconX += iconSize + iconMargin;
 
     // Reload icon
     headerBar.reloadIcon = scene.add.image(iconX + iconSize / 2, iconY, 'reload_icon').setOrigin(0.5).setDisplaySize(iconSize, iconSize).setDepth(102).setInteractive();
-    iconX += iconSize;
+    iconX += iconSize + iconMargin;
 
     // Home icon
     headerBar.homeIcon = scene.add.image(iconX + iconSize / 2, iconY, 'home_icon').setOrigin(0.5).setDisplaySize(iconSize, iconSize).setDepth(102).setInteractive();
-    iconX += iconSize;
+    iconX += iconSize + iconMargin;
 
     // Back icon
     headerBar.backIcon = scene.add.image(iconX + iconSize / 2, iconY, 'back_icon').setOrigin(0.5).setDisplaySize(iconSize, iconSize).setDepth(102).setInteractive();
-    iconX += iconSize;
 
-    // Các text (dịch sang phải sau các icon)
-    const textStartX = iconX + 12;
+    // Các text (dịch sang trái, không bị icon che)
+    const textStartX = 16;
     headerBar.remainText = scene.add.text(textStartX, Math.round(headerHeight * 0.18), LANG.remain + ': 0/0', window.getGameTextStyle({bold: true}, scene)).setDepth(101);
     headerBar.correctText = scene.add.text(Math.round(scene.sys.game.config.width * 0.32), Math.round(headerHeight * 0.18), '✔️ 0 ' + LANG.correct, window.getGameTextStyle({}, scene)).setDepth(101);
     headerBar.incorrectText = scene.add.text(Math.round(scene.sys.game.config.width * 0.6), Math.round(headerHeight * 0.18), '❌ 0 ' + LANG.incorrect, window.getGameTextStyle({}, scene)).setDepth(101);
@@ -61,6 +63,8 @@ window.createHeaderBar = function(scene) {
 
     // Home handler
     headerBar.homeIcon.on('pointerdown', function() {
+        // Dừng tất cả âm thanh đang phát trước khi về IntroScene
+        if (scene.sound && scene.sound.stopAll) scene.sound.stopAll();
         scene.scene.start('IntroScene');
     });
 

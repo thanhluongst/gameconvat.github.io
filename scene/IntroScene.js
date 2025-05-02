@@ -43,5 +43,14 @@ class IntroScene extends Phaser.Scene {
 
         animalBtn.on('pointerdown', () => this.scene.start('StageScene', { mode: 'animal' }));
         fruitBtn.on('pointerdown', () => this.scene.start('StageScene', { mode: 'fruit' }));
+
+        // Thêm nút "Giới thiệu" ở dưới cùng màn hình
+        const aboutBtn = this.add.text(w/2, h - 60, 'ℹ️ Giới thiệu', {
+            fontSize: getResponsiveFont(this, 20),
+            color: '#1976d2',
+            backgroundColor: '#fff',
+            fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+        }).setOrigin(0.5).setInteractive();
+        aboutBtn.on('pointerdown', () => this.scene.start('AboutScene'));
     }
 }

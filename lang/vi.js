@@ -15,5 +15,8 @@ window.LANG = {
   fruit: "Trái cây",
   introTitle: 'Củ Ngần animals speak and play',
   introSubtitle: 'Chọn chủ đề để bắt đầu',
+  about: "Giới thiệu",
+  aboutAuthor: "Tác giả: Bs. Trần Quốc Hoài.\nGame giành cho con gái Củ Ngần.\nMọi ý kiến đóng góp xin gửi về email: bsquochoainew@gmail.com\nCảm ơn bạn đã chơi game này!\nHỗ trợ tác giả: TRẦN QUỐC HOÀI\nSố tài khoản: 0394446896\nNgân hàng: MB BANK - Ngân hàng quân đội\nChi nhánh: Ho Chi Minh",
+  aboutHomeBtn: "🔙 Trang chủ",
   // ...bổ sung các text khác nếu cần...
 };

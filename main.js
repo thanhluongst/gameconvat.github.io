@@ -4,7 +4,7 @@ const config = {
     height: window.innerHeight, // Trừ chiều cao header bar cố định 50px
     backgroundColor: '#e0f7fa',
     parent: 'game-container', // Render canvas vào div riêng
-    scene: [IntroScene, StageScene, MainScene, EndScene],
+    scene: [IntroScene, StageScene, MainScene, EndScene, AboutScene],
     physics: { default: 'arcade' },
     scale: { mode: Phaser.Scale.RESIZE, autoCenter: Phaser.Scale.CENTER_BOTH }
 };

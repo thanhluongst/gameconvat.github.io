@@ -31,7 +31,11 @@ class StageScene extends Phaser.Scene {
         const cardsPerRow = Math.max(1, Math.floor((w - margin) / (cardWidth + margin)));
         const totalRows = Math.ceil(totalStage / cardsPerRow);
         // Đặt text chọn stage lên cao hơn và setDepth lớn để không bị che
-        const selectStageText = this.add.text(w/2, 30, LANG.selectStage, { fontSize: getResponsiveFont(this, 18), color: '#333', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
+        const selectStageText = this.add.text(w/2, 30, LANG.selectStage, {
+            fontSize: getResponsiveFont(this, 18),
+            color: '#333',
+            fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+        }).setOrigin(0.5);
         selectStageText.setDepth(1000);
         for (let i = 0; i < totalStage; i++) {
             const row = Math.floor(i / cardsPerRow);
@@ -71,7 +75,11 @@ class StageScene extends Phaser.Scene {
                 x,
                 y + cardHeight/2 - 32,
                 LANG.stageLabel.replace('{num}', stageNum),
-                { fontSize: '20px', color: '#1976d2' }
+                {
+                    fontSize: '20px',
+                    color: '#1976d2',
+                    fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+                }
             ).setOrigin(0.5);
             // Tạo vùng tương tác
             const hitZone = this.add.zone(x, y, cardWidth, cardHeight).setRectangleDropZone(cardWidth, cardHeight).setInteractive();
