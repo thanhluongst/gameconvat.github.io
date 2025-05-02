@@ -133,8 +133,10 @@ MainScene.prototype.askAnimal = function () {
     }
     playSounds();
     if (this.repeatSoundTimer) this.repeatSoundTimer.remove(false);
+    // Use window.getRepeatSoundDelay() for correct global access
+    var delay = (window.getRepeatSoundDelay) ? window.getRepeatSoundDelay() : REPEAT_SOUND_DELAY;
     this.repeatSoundTimer = this.time.addEvent({
-        delay: REPEAT_SOUND_DELAY, loop: true,
+        delay: delay, loop: true,
         callback: function () { if (self.currentAnswer === animal.key) playSounds(); }
     });
     this.turnTries = 2;

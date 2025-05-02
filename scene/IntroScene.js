@@ -87,6 +87,17 @@ class IntroScene extends Phaser.Scene {
         }).setOrigin(0.5).setInteractive();
         aboutBtn.on('pointerdown', () => { unlockAll(); this.scene.start('AboutScene'); });
 
+        // Thêm nút cài đặt (settings) ở góc trên phải
+        const settingsBtn = this.add.text(w - 40, 40, '⚙️', {
+            fontSize: getResponsiveFont(this, 18),
+            color: '#1976d2',
+            backgroundColor: '#fff',
+            fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif",
+            padding: { left: 10, right: 10, top: 6, bottom: 6 },
+            borderRadius: 12
+        }).setOrigin(1, 0.5).setInteractive();
+        settingsBtn.on('pointerdown', () => { unlockAll(); this.scene.start('SettingsScene'); });
+
         // Sau khi UI đã hiển thị, preload asset MainScene chạy nền (không ảnh hưởng UI)
         preloadMainSceneAssets(this);
         this.load.start();

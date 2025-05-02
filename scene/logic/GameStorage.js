@@ -56,5 +56,47 @@ window.GameStorage = {
         var arr = Object.keys(obj).map(function(k) { return { key: k, count: obj[k] }; });
         arr.sort(function(a, b) { return b.count - a.count; });
         return arr.slice(0, n);
+    },
+    /**
+     * Save app settings to localStorage
+     * @param {Object} settings - { lang: 'vi'|'en', soundMode: 'both'|'en'|'vi' }
+     */
+    saveAppSettings: function(settings) {
+        localStorage.setItem('appSettings', JSON.stringify(settings));
+    },
+    /**
+     * Load app settings from localStorage
+     * @returns {Object} settings - { lang, soundMode }
+     */
+    loadAppSettings: function() {
+        var data = localStorage.getItem('appSettings');
+        if (!data) return { lang: (typeof DEFAULT_LANG !== 'undefined' ? DEFAULT_LANG : 'vi'), soundMode: (typeof SOUND_MODE !== 'undefined' ? SOUND_MODE : 'both') };
+        try {
+            var obj = JSON.parse(data);
+            return {
+                lang: obj.lang || (typeof DEFAULT_LANG !== 'undefined' ? DEFAULT_LANG : 'vi'),
+                soundMode: obj.soundMode || (typeof SOUND_MODE !== 'undefined' ? SOUND_MODE : 'both')
+            };
+        } catch (e) {
+            return { lang: (typeof DEFAULT_LANG !== 'undefined' ? DEFAULT_LANG : 'vi'), soundMode: (typeof SOUND_MODE !== 'undefined' ? SOUND_MODE : 'both') };
+        }
     }
 };
+/**
+ * Get repeat sound delay based on appSettings.soundMode
+ * If soundMode is 'both', return 2000ms, else return 4300ms
+ */
+window.getRepeatSoundDelay = function() {
+    let soundMode = 'both';
+    if (window.GameStorage) {
+        var settings = window.GameStorage.loadAppSettings();
+        console.log('getRepeatSoundDelay', settings, settings.soundMode);
+        if (settings && settings.soundMode) soundMode = settings.soundMode;
+    }
+    if (soundMode == 'both') {
+        return REPEAT_SOUND_DELAY;
+        
+    } else {
+        return DEFAULT_SOUND_DELAY;
+    }
+}
