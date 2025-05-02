@@ -15,6 +15,15 @@ class IntroScene extends Phaser.Scene {
     create() {
         const w = this.sys.game.config.width, h = this.sys.game.config.height;
 
+        // Unlock audio context on first user interaction (for iOS/Android browsers)
+        function unlockAudioContext(scene) {
+            if (scene.sound && scene.sound.context && scene.sound.context.state === 'suspended') {
+                scene.sound.context.resume();
+            }
+        }
+        // Gọi khi bấm bất kỳ nút nào trên IntroScene
+        const unlockAll = () => unlockAudioContext(this);
+
         // Thêm menu chọn ngôn ngữ, căn phải/trái để không bị chồng lấp
         const langBtnVi = this.add.text(w/2 - 20, 40, LANG.langVi, {
             fontSize: getResponsiveFont(this, 18),
@@ -32,8 +41,8 @@ class IntroScene extends Phaser.Scene {
             fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif",
             borderRadius: 12
         }).setOrigin(0, 0.5).setInteractive();
-        langBtnVi.on('pointerdown', () => { window.setLang('vi'); this.scene.restart(); });
-        langBtnEn.on('pointerdown', () => { window.setLang('en'); this.scene.restart(); });
+        langBtnVi.on('pointerdown', () => { unlockAll(); window.setLang('vi'); this.scene.restart(); });
+        langBtnEn.on('pointerdown', () => { unlockAll(); window.setLang('en'); this.scene.restart(); });
 
         this.add.text(w/2, h/4, LANG.introTitle, { fontSize: getResponsiveFont(this, 14), color: '#333', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
         this.add.text(w/2, h/4+50, LANG.introSubtitle, { fontSize: getResponsiveFont(this, 20), color: '#555', fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif" }).setOrigin(0.5);
@@ -66,8 +75,8 @@ class IntroScene extends Phaser.Scene {
             }).setOrigin(0.5);
         }
 
-        animalBtn.on('pointerdown', () => this.scene.start('StageScene', { mode: 'animal' }));
-        fruitBtn.on('pointerdown', () => this.scene.start('StageScene', { mode: 'fruit' }));
+        animalBtn.on('pointerdown', () => { unlockAll(); this.scene.start('StageScene', { mode: 'animal' }); });
+        fruitBtn.on('pointerdown', () => { unlockAll(); this.scene.start('StageScene', { mode: 'fruit' }); });
 
         // Thêm nút "Giới thiệu" ở dưới cùng màn hình
         const aboutBtn = this.add.text(w/2, h - 60, LANG.aboutBtn, {
@@ -76,7 +85,7 @@ class IntroScene extends Phaser.Scene {
             backgroundColor: '#fff',
             fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
         }).setOrigin(0.5).setInteractive();
-        aboutBtn.on('pointerdown', () => this.scene.start('AboutScene'));
+        aboutBtn.on('pointerdown', () => { unlockAll(); this.scene.start('AboutScene'); });
 
         // Sau khi UI đã hiển thị, preload asset MainScene chạy nền (không ảnh hưởng UI)
         preloadMainSceneAssets(this);

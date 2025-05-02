@@ -20,6 +20,8 @@ MainScene.prototype.init = function (data) {
 };
 
 MainScene.prototype.preload = function () {
+    // Hiển thị loading gif khi đang load
+    this.loadingHelper = window.showLoadingText(this);
     preloadMainSceneAssets(this);
 };
 
