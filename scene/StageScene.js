@@ -10,6 +10,9 @@ class StageScene extends Phaser.Scene {
         this.mode = data && data.mode ? data.mode : 'animal';
     }
     preload() {
+        // Hiển thị loading gif khi đang load
+        this.loadingHelper = window.showLoadingText(this);
+
         // Load all possible animal/fruit images for stage cards
         const sourceList = this.mode === 'animal' ? animalList : (window.fruitList || []);
         sourceList.forEach(a => {
@@ -17,8 +20,17 @@ class StageScene extends Phaser.Scene {
                 this.load.image(a.key, a.img);
             }
         });
+
+        // Nếu muốn preload thêm mp3 cho stage, có thể thêm ở đây
+        // (Không cần thiết cho StageScene, chỉ MainScene mới cần preload mp3)
     }
     create() {
+        // Xóa loading text nếu có
+        if (this.loadingHelper) {
+            this.loadingHelper.destroy();
+            this.loadingHelper = null;
+        }
+
         const sourceList = this.mode === 'animal' ? animalList : (window.fruitList || []);
         const total = sourceList.length;
         const perStage = ANIMAL_MAX_RANDOM;

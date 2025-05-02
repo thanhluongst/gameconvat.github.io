@@ -70,6 +70,8 @@ window.createHeaderBar = function(scene) {
 
     // Back handler
     headerBar.backIcon.on('pointerdown', function() {
+        // Dừng tất cả âm thanh đang phát trước khi về StageScene
+        if (scene.sound && scene.sound.stopAll) scene.sound.stopAll();
         scene.scene.start('StageScene', { mode: scene.mode });
     });
 

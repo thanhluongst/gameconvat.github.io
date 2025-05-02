@@ -17,7 +17,7 @@ window.getGameTextStyle = function(options, scene) {
     var availableWidth = w - paddingLeft - paddingRight;
     var minFontSize = 16;
     var fontSize = options.fontSize || Math.max(minFontSize, Math.floor(availableWidth / maxCharsPerLine));
-    console.log('getGameTextStyle', options.fontSize);
+    // console.log('getGameTextStyle', options.fontSize);
     revalue = {
         fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif",
         fontSize: fontSize + 'px',

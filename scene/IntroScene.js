@@ -7,6 +7,10 @@ class IntroScene extends Phaser.Scene {
     preload() {
         this.load.image('animal_icon', animalList[0].img);
         this.load.image('fruit_icon', 'assets/fruit.png'); // Thêm ảnh placeholder nếu có
+        // Preload các frame loading qua hàm tiện ích
+        if (window.preloadLoadingGifFrames) {
+            window.preloadLoadingGifFrames(this);
+        }
     }
     create() {
         const w = this.sys.game.config.width, h = this.sys.game.config.height;

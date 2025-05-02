@@ -20,6 +20,10 @@ MainScene.prototype.init = function (data) {
 };
 
 MainScene.prototype.preload = function () {
+
+    // Hiển thị loading gif khi đang load
+    this.loadingHelper = window.showLoadingText(this);
+
     animalList.forEach(function (a) {
         this.load.image(a.key, a.img);
         this.load.audio(a.key + '_vi', a.soundVi);
@@ -35,9 +39,16 @@ MainScene.prototype.preload = function () {
     this.load.image('reload_icon', 'assets/gameicons/reload.png');
     this.load.image('home_icon', 'assets/gameicons/home.png');
     this.load.image('back_icon', 'assets/gameicons/back.png');
+    this.load.image('loading_gif', 'assets/gameicons/loading.gif');
 };
 
 MainScene.prototype.create = function () {
+    // Xóa loading text nếu có
+    if (this.loadingHelper) {
+        this.loadingHelper.destroy();
+        this.loadingHelper = null;
+    }
+
     var sourceList = this.mode === 'animal' ? animalList : (window.fruitList || []);
     this.playingAnimals = window.AnimalManager.getStageAnimals(sourceList, this.stage, ANIMAL_MAX_RANDOM);
     this.repeatSoundTimer = null;
