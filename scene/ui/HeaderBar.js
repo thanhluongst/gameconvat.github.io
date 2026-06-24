@@ -25,8 +25,9 @@ window.createHeaderBar = function(scene) {
         iconSize = Math.round(headerHeight * 0.7);
         iconMargin = Math.round(headerHeight * 0.2);
     } else {
-        iconSize = fontSize;
-        iconMargin = Math.round(fontSize * 0.3);
+        // Portrait: tối thiểu 36px để ngón tay bấm được dễ
+        iconSize = Math.max(36, Math.round(headerHeight * 0.75));
+        iconMargin = Math.max(6, Math.round(iconSize * 0.15));
     }
     const totalIcons = 4;
     const totalIconsWidth = totalIcons * iconSize + (totalIcons - 1) * iconMargin;

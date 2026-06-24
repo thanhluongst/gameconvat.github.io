@@ -47,7 +47,7 @@ class StageScene extends Phaser.Scene {
             fontSize: getResponsiveFont(this, 18),
             color: '#333',
             fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
-        }).setOrigin(0.5);
+        }).setOrigin(0.5).setScrollFactor(0);
         selectStageText.setDepth(1000);
         for (let i = 0; i < totalStage; i++) {
             const row = Math.floor(i / cardsPerRow);
@@ -140,6 +140,26 @@ class StageScene extends Phaser.Scene {
                 this.scene.start('MainScene', { mode: this.mode, stage: i });
             });
         }
+        // Bật cuộn dọc nếu nội dung vượt chiều cao màn hình
+        const contentBottom = 200 + totalRows * (cardHeight + margin) + 80;
+        if (contentBottom > h) {
+            this.cameras.main.setBounds(0, 0, w, contentBottom);
+            this.add.text(w / 2, 58, '↕ Vuốt lên/xuống để xem thêm stage', {
+                fontSize: getResponsiveFont(this, 36), color: '#999',
+                fontFamily: "'Baloo 2', 'Fredoka', Arial, sans-serif"
+            }).setOrigin(0.5).setScrollFactor(0).setDepth(999);
+
+            let startY = 0, didDrag = false;
+            this.input.on('pointerdown', p => { startY = p.y; didDrag = false; });
+            this.input.on('pointermove', p => {
+                if (!p.isDown) return;
+                if (Math.abs(p.y - startY) > 8) didDrag = true;
+                if (!didDrag) return;
+                const cam = this.cameras.main;
+                cam.scrollY = Phaser.Math.Clamp(cam.scrollY - (p.velocity.y * 0.4), 0, contentBottom - h);
+            });
+        }
+
         // Thêm nút Top Wrong (Sai nhiều nhất) ở cạnh dưới màn hình, trên aboutHomeBtn
         const topWrongBtn = this.add.text(
             w / 2,
@@ -153,6 +173,7 @@ class StageScene extends Phaser.Scene {
             }
         ).setOrigin(0.5).setInteractive();
         topWrongBtn.on('pointerdown', () => this.scene.start('TopWrongClicksScene'));
+        topWrongBtn.setScrollFactor(0);
 
         // Thêm nút "aboutHomeBtn" ở cạnh dưới màn hình
         const aboutHomeBtn = this.add.text(
@@ -167,5 +188,6 @@ class StageScene extends Phaser.Scene {
             }
         ).setOrigin(0.5).setInteractive();
         aboutHomeBtn.on('pointerdown', () => this.scene.start('IntroScene'));
+        aboutHomeBtn.setScrollFactor(0);
     }
 }

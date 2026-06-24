@@ -1,0 +1,13 @@
+{
+  "name": "Con Vật - Game Học Từ Vựng",
+  "short_name": "Con Vật",
+  "description": "Game nghe và chọn đúng con vật bằng tiếng Việt và tiếng Anh",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#e0f7fa",
+  "theme_color": "#1976d2",
+  "icons": [
+    { "src": "assets/dog.png", "sizes": "any", "type": "image/png", "purpose": "any" }
+  ]
+}

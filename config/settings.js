@@ -4,8 +4,8 @@ const ANIMAL_MAX_SIZE = Math.min(220, Math.max(100, Math.min(window.innerWidth, 
 const ANIMAL_MIN_SPEED = 80;
 const ANIMAL_MAX_SPEED = 110;
 
-// Max number of images to show per game round
-const ANIMAL_MAX_RANDOM = 8;
+// Max animals per round — giảm xuống 6 trên màn hình nhỏ để tránh tràn lưới
+const ANIMAL_MAX_RANDOM = Math.min(window.innerWidth, window.innerHeight) < 400 ? 6 : 8;
 
 
 // Độ lắc tối đa cho animal sprite (đơn vị: độ)

@@ -2,9 +2,12 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1976d2">
+    <link rel="manifest" href="manifest.json">
     <title>Củ Ngần's animals speak and select</title>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
@@ -16,18 +19,56 @@
             overflow: hidden;
             background: #e0f7fa;
             overscroll-behavior: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         canvas {
             display: block;
             margin: 0 auto;
             touch-action: none;
+            -webkit-touch-callout: none;
         }
         body, #header-bar, #game-container, canvas, .phaser-text {
             font-family: 'Baloo 2', 'Fredoka', Arial, sans-serif !important;
         }
+
+        /* Gợi ý xoay ngang — hiện trên điện thoại portrait nhỏ hơn 480px */
+        #rotate-hint {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #1976d2;
+            color: #fff;
+            font-family: 'Baloo 2', Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+        #rotate-hint span { font-size: 52px; }
+        #rotate-hint small { font-size: 14px; opacity: 0.8; }
+        @media screen and (max-width: 479px) and (orientation: portrait) {
+            #rotate-hint { display: flex; }
+        }
     </style>
 </head>
 <body>
+    <!-- Gợi ý xoay ngang trên điện thoại portrait nhỏ; bấm vào để ẩn -->
+    <div id="rotate-hint" onclick="this.style.display='none'">
+        <span>📱</span>
+        Xoay ngang để chơi tốt hơn!
+        <small>Bấm để bỏ qua</small>
+    </div>
+
+    <script>
+        // Ngăn context menu khi long-press trên mobile
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+
     <script src="data/animalList.js"></script>
     <script src="lang/vi.js"></script>
     <script src="lang/en.js"></script>
