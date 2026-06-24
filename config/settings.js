@@ -1,5 +1,5 @@
-// Animal image settings
-const ANIMAL_MAX_SIZE = 220; // px, max width or height
+// Animal image settings — responsive: 30% of shorter screen edge, capped 100–220px
+const ANIMAL_MAX_SIZE = Math.min(220, Math.max(100, Math.min(window.innerWidth, window.innerHeight) * 0.3));
 // Animal moving speed settings (pixels per second)
 const ANIMAL_MIN_SPEED = 80;
 const ANIMAL_MAX_SPEED = 110;
